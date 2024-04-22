@@ -52,6 +52,53 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
 
+# GCLOUD SDK
+if [ -d "$HOME/tools/google-cloud-sdk" ]; then
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '$HOME/tools/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/tools/google-cloud-sdk/path.zsh.inc'; fi
+
+  # The next line enables shell command completion for gcloud.
+  if [ -f '$HOME/tools/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/tools/google-cloud-sdk/completion.zsh.inc'; fi
+
+  export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+fi
+
+# Warden
+if [ -d "/opt/warden" ]; then
+  export PATH="/opt/warden/bin:$PATH"
+
+  function magexec() { warden env exec php-fpm bin/magento "$@"; }
+fi
+
+# Pyenv initialization
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# brew for current user
+if [ -d /opt/homebrew ]; then
+  if [ "$(stat -f %Su /opt/homebrew)" != "$(whoami)" ]; then
+    echo "/opt/homebrew not writable, consider:\n  sudo chown -R $(whoami) /opt/homebrew"
+  else
+    EXPORT ENABLE_PASS_AUTOCOMPLETE=true
+  fi
+fi
+
+# pass autocompletion
+if type brew &>/dev/null && [[ $ENABLE_PASS_AUTOCOMPLETE == true ]]; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
+
+# For pip and others
+export PATH="$HOME/.local/bin$PATH"
+
+# Misc functions
+function flushdns() { sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder }
+function chromium() { /Applications/Chromium.app/Contents/MacOS/Chromium --flag-switches-begin --custom-ntp=chrome://version/ --extension-mime-request-handling=always-prompt-for-install --flag-switches-end }
+
 # Source user-specific config(s)
 user_config="$HOME/.zshrc_$(whoami)"
 
@@ -62,5 +109,4 @@ else
     echo "zsh -- no user config to source for $USER"
 fi
 
-echo "current home: $HOME"
-
+echo "\e[32mcurrent home: $HOME\e[0m"
