@@ -80,7 +80,7 @@ if [ -d /opt/homebrew ]; then
   if [ "$(stat -f %Su /opt/homebrew)" != "$(whoami)" ]; then
     echo "/opt/homebrew not writable, consider:\n  sudo chown -R $(whoami) /opt/homebrew"
   else
-    EXPORT ENABLE_PASS_AUTOCOMPLETE=true
+    export ENABLE_PASS_AUTOCOMPLETE=true
   fi
 fi
 
