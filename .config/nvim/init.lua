@@ -1,6 +1,6 @@
 -- Load icons
 local ui_config = require 'ui'
--- Disable for nvim-tree
+-- Disable netrw for nvim-tree or neo-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 -- See `:hepleader`
@@ -122,7 +122,7 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_web_icons },
+      --{ 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_web_icons },
     },
     config = function()
       --  - Insert mode: <c-/>
@@ -404,10 +404,11 @@ require('lazy').setup({
     end,
   },
 
+  -- See `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- See `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
+  require 'kickstart.plugins.neo-tree',
   { import = 'plugins' },
 }, {
   ui_config,

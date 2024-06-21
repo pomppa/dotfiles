@@ -10,4 +10,5 @@ return {
     vim.keymap.set('n', '<leader>t', api.tree.toggle, { desc = 'toggle tree' })
     require('nvim-tree').setup {}
   end,
+  enabled = false,
 }
