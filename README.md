@@ -12,3 +12,8 @@ extend to source user specific zsh configs
 ```
 $ touch ~/.zshrc_$(whoami)
 ```
+
+extend configs privately
+```
+$ touch ~/dotfiles/.*_private
+```
