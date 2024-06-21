@@ -18,8 +18,10 @@ extend configs privately
 $ touch ~/dotfiles/.*_private
 ```
 
-# pull latest and update submodules
+pull latest and update submodules
 ```
 $ git pull --recurse-submodules
 $ git submodule update --init --recursive
 ```
+
+install tmux plugins `prefix` - `I`
