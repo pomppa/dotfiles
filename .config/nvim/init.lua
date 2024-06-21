@@ -1,22 +1,23 @@
+-- Load icons
+local ui_config = require 'ui'
+-- Disable for nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 -- See `:hepleader`
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.g.have_nerd_font = false
-
+vim.g.have_web_icons = true
 -- See `:help vim.opt` / : `help option-list`
 vim.opt.syntax = 'on'
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 vim.opt.showmode = false
-
 --  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
-
 vim.opt.breakindent = true
 vim.opt.undofile = true
 vim.opt.ignorecase = true
@@ -24,38 +25,30 @@ vim.opt.smartcase = true
 vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
-
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
-
 -- Show which line your cursor is on
 vim.opt.cursorline = true
-
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
-
---  See `:help vim.keymap.set()`
 vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- See `:help vim.keymap.set()`
 -- Diagnostic keymaps
---- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<left>', '<cmd>echo "h"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "l"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "k"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "j"<CR>')
-
+--vim.keymap.set('n', '<left>', '<cmd>echo "h"<CR>')
+--vim.keymap.set('n', '<right>', '<cmd>echo "l"<CR>')
+--vim.keymap.set('n', '<up>', '<cmd>echo "k"<CR>')
+--vim.keymap.set('n', '<down>', '<cmd>echo "j"<CR>')
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'lower window' })
@@ -71,7 +64,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
+-- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -105,11 +98,11 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').register {
-        -- ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = 'document', _ = 'which_key_ignore' },
-        -- ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = 'search', _ = 'which_key_ignore' },
-        -- ['<leader>w'] = { name = '[W ]orkspace', _ = 'which_key_ignore' },
+        ['<leader>c'] = { name = 'code (which-key)', _ = 'which_key_ignore' },
+        ['<leader>d'] = { name = 'document (which-key)', _ = 'which_key_ignore' },
+        ['<leader>r'] = { name = 'rename (which-key)', _ = 'which_key_ignore' },
+        ['<leader>s'] = { name = 'search (whick-key)', _ = 'which_key_ignore' },
+        ['<leader>w'] = { name = 'workspace (which-key)', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -129,7 +122,7 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_web_icons },
     },
     config = function()
       --  - Insert mode: <c-/>
@@ -215,35 +208,28 @@ require('lazy').setup({
           map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'lsp_dynamic_workspace_symbols')
           map('<leader>rn', vim.lsp.buf.rename, 'rename a variable (files etc)')
           map('<leader>ca', vim.lsp.buf.code_action, 'code action (errors)')
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+
+          map('K', vim.lsp.buf.hover, 'hover documentation')
           map('gD', vim.lsp.buf.declaration, 'declaration')
-          --          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          --         if client and client.server_capabilities.documentHighlightProvider then
-          --          vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, { -- :help CursorHold
-          --           buffer = event.buf,
-          --          callback = vim.lsp.buf.document_highlight,
-          --       })
-          --
-          --           vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-          --              buffer = event.buf,
-          --             callback = vim.lsp.buf.clear_references,
-          --          })
-          --       end
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.server_capabilities.documentHighlightProvider then
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, { -- :help CursorHold
+              buffer = event.buf,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+              buffer = event.buf,
+              callback = vim.lsp.buf.clear_references,
+            })
+          end
         end,
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       local servers = {
-        --        function translate_path(filepath)
-        --         local project_root_local = '/sites/project-m2'
-        --        local project_root_container = '/var/www/html'
-        --
-        --         return filepath:gsub(project_root_local, project_root_container)
-        --      end,
-        require('lspconfig').phpactor.setup {
-          cmd = { 'docker', 'exec', 'container', '/home/www-data/.composer/vendor/bin/phpactor' },
-        },
         lua_ls = {
           settings = {
             Lua = {
@@ -260,7 +246,9 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
+        'intelephense',
       })
+
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
@@ -274,7 +262,6 @@ require('lazy').setup({
       }
     end,
   },
-
   { -- Autoformat
     'stevearc/conform.nvim',
     lazy = false,
@@ -391,7 +378,7 @@ require('lazy').setup({
       require('mini.ai').setup { n_lines = 500 }
       -- require('mini.surround').setup()
       local statusline = require 'mini.statusline'
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      statusline.setup { use_icons = vim.g.have_web_icons }
       -- statusline.section_location = function()
       -- return '%2l:%-2v'
       -- end
@@ -420,31 +407,10 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-
   -- See `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
-  { 'junegunn/fzf' },
-  { 'junegunn/fzf.vim' },
-  { 'nvimdev/lspsaga.nvim', enabled = true },
-  { 'sahibalejandro/vim-php', enabled = true },
+  { import = 'plugins' },
 }, {
-  ui = {
-    icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
-    },
-  },
+  ui_config,
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`

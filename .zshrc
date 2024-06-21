@@ -61,13 +61,18 @@ if [ -d "$HOME/tools/google-cloud-sdk" ]; then
   if [ -f '$HOME/tools/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/tools/google-cloud-sdk/completion.zsh.inc'; fi
 
   export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+  export PATH=$PATH:$HOME/tools/google-cloud-sdk/bin
+  echo "gloud configured"
 fi
 
 # Warden
 if [ -d "/opt/warden" ]; then
   export PATH="/opt/warden/bin:$PATH"
-
+  export PATH="$HOME/.composer/vendor/bin:$PATH"
   function magexec() { warden env exec php-fpm bin/magento "$@"; }
+  function magdexec() { warden env exec php-fpm bin/magento "$@"; }
+
 fi
 
 # Pyenv initialization
@@ -107,6 +112,10 @@ if [ -f $user_config ]; then
     echo "zsh -- sourced user config $USER"
 else
     echo "zsh -- no user config to source for $USER"
+fi
+
+if [ -f ".zshrc_private" ]; then
+    source .zshrc_private
 fi
 
 echo "\e[32mcurrent home: $HOME\e[0m"
