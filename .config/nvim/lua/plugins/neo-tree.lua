@@ -29,6 +29,7 @@ return {
   end,
   --]]
   keys = {
+    { '<C-t>', ':Neotree toggle<CR>', { desc = 'NeoTree toggle' } },
     { '<leader>t', ':Neotree toggle<CR>', { desc = 'NeoTree toggle' } },
     { '<leader>r', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
   },
@@ -37,7 +38,7 @@ return {
     --enabled = true,
     --},
     filesystem = {
-      --hijack_netrw_behavior = 'open_default',
+      hijack_netrw_behavior = 'open_default',
       --lazy = true,
       filtered_items = {
         hide_dotfiles = false,
@@ -47,6 +48,11 @@ return {
       window = {
         mappings = {
           -- ['\\'] = 'close_window',
+          ['t'] = function(state)
+            local node = state.tree:get_node()
+            local path = node:get_id()
+            vim.cmd('tabnew ' .. path)
+          end,
         },
       },
     },
