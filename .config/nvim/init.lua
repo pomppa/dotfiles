@@ -406,8 +406,6 @@ require('lazy').setup({
 
   -- See `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
   { import = 'plugins' },
 }, {
   ui_config,

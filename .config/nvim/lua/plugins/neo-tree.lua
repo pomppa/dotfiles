@@ -34,9 +34,9 @@ return {
     { '<leader>r', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
   },
   opts = {
-    --follow_current_file = {
-    --enabled = true,
-    --},
+    follow_current_file = {
+      enabled = true,
+    },
     filesystem = {
       hijack_netrw_behavior = 'open_default',
       --lazy = true,
@@ -56,7 +56,6 @@ return {
         },
       },
     },
-    --[[
     buffers = {
       follow_current_file = {
         enabled = true, -- This will find and focus the file in the active buffer every time
@@ -64,6 +63,19 @@ return {
         leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
       },
     },
-    --]]
   },
+  init = function()
+    vim.api.nvim_create_autocmd('VimEnter', {
+      pattern = '*',
+      callback = function()
+        local buffer = vim.api.nvim_get_current_buf()
+        local buf_name = vim.api.nvim_buf_get_name(buffer)
+        local is_directory = vim.fn.isdirectory(buf_name) == 1
+
+        if is_directory then
+          vim.cmd 'Neotree toggle'
+        end
+      end,
+    })
+  end,
 }
