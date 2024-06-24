@@ -101,7 +101,7 @@ require('lazy').setup({
         ['<leader>c'] = { name = 'code (which-key)', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = 'document (which-key)', _ = 'which_key_ignore' },
         ['<leader>r'] = { name = 'rename (which-key)', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = 'search (whick-key)', _ = 'which_key_ignore' },
+        ['<leader>s'] = { name = 'search (which-key)', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = 'workspace (which-key)', _ = 'which_key_ignore' },
       }
     end,
@@ -163,7 +163,7 @@ require('lazy').setup({
           winblend = 10,
           previewer = false,
         })
-      end, { desc = 'search in current buffer' })
+      end, { desc = '[S]earch: In current buffer' })
 
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>s/', function()
@@ -175,7 +175,7 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = 'search nvim files' })
+      end, { desc = '[S]earch nvim files' })
     end,
   },
 
@@ -272,7 +272,7 @@ require('lazy').setup({
           require('conform').format { async = true, lsp_fallback = true }
         end,
         mode = '',
-        desc = 'format buffer',
+        desc = '[F]ormat buffer',
       },
     },
     opts = {
@@ -389,7 +389,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'php' },
       auto_install = true,
       highlight = {
         enable = true,

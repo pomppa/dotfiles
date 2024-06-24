@@ -25,9 +25,19 @@ return {
         'php-debug-adapter',
       },
     }
+    -- Function to toggle dap UI
+    local function toggle_dap_ui()
+      if dap.session() then
+        dapui.close()
+        dap.terminate()
+      else
+        dapui.open()
+        dap.continue()
+      end
+    end
 
     -- Keymaps
-    vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
+    vim.keymap.set('n', '<F5>', toggle_dap_ui, { desc = 'Debug: Start/Continue/Toggle UI' })
     vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
     vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
     vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
