@@ -26,14 +26,14 @@ eval "$(fzf --zsh)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$("$HOME/tools/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/tools/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/tools/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="$HOME/miniconda3/bin:$PATH"
+        export PATH="$HOME/tools/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -82,6 +82,7 @@ fi
 
 # brew for current user
 if [ -d /opt/homebrew ]; then
+  export PATH="/opt/homebrew/bin:$PATH"
   if [ "$(stat -f %Su /opt/homebrew)" != "$(whoami)" ]; then
     echo "/opt/homebrew not writable, consider:\n  sudo chown -R $(whoami) /opt/homebrew"
   else
@@ -97,12 +98,12 @@ if type brew &>/dev/null && [[ $ENABLE_PASS_AUTOCOMPLETE == true ]]; then
   compinit
 fi
 
-# For pip and others
 export PATH="$HOME/.local/bin$PATH"
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
-# Misc functions
-function flushdns() { sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder }
-function chromium() { /Applications/Chromium.app/Contents/MacOS/Chromium --flag-switches-begin --custom-ntp=chrome://version/ --extension-mime-request-handling=always-prompt-for-install --flag-switches-end }
+# Locale
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Source user-specific config(s)
 user_config="$HOME/.zshrc_$(whoami)"
@@ -118,4 +119,4 @@ if [ -f ".zshrc_private" ]; then
     source .zshrc_private
 fi
 
-echo "\e[32mcurrent home: $HOME\e[0m"
+echo "\e[32mcurrent home: $HOME\e[m"

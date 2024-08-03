@@ -4,6 +4,6 @@ return {
   { 'junegunn/fzf.vim' },
   { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
   { 'numToStr/Comment.nvim', opts = {} }, -- "gc" to comment visual regions/lines
-  { 'nvimdev/lspsaga.nvim' },
+  --{ 'nvimdev/lspsaga.nvim' },
   { 'sahibalejandro/vim-php' },
 }
