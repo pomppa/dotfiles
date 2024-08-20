@@ -68,6 +68,8 @@ return {
         'stylua',
         'intelephense',
         'tsserver',
+        'csharp_ls',
+        'fsautocomplete',
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

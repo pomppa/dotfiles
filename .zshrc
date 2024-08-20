@@ -1,6 +1,4 @@
 # Refer to: https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template
-
-# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # See: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
@@ -85,21 +83,25 @@ if [ -d /opt/homebrew ]; then
   export PATH="/opt/homebrew/bin:$PATH"
   if [ "$(stat -f %Su /opt/homebrew)" != "$(whoami)" ]; then
     echo "/opt/homebrew not writable, consider:\n  sudo chown -R $(whoami) /opt/homebrew"
-  else
-    export ENABLE_PASS_AUTOCOMPLETE=true
   fi
 fi
 
 # pass autocompletion
 if type brew &>/dev/null && [[ $ENABLE_PASS_AUTOCOMPLETE == true ]]; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
+  export ENABLE_PASS_AUTOCOMPLETE=true
   autoload -Uz compinit
   compinit
 fi
 
 export PATH="$HOME/.local/bin$PATH"
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+
+# For VS Code
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
+# Add .NET Core SDK tools
+export PATH="$PATH:$HOME/.dotnet/tools"
 
 # Locale
 export LANG=en_US.UTF-8
