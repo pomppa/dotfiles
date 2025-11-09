@@ -7,11 +7,12 @@ return {
       require('which-key').setup()
       -- Document existing key chains
       require('which-key').register {
-        ['<leader>c'] = { name = 'code (which-key)', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = 'document (which-key)', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = 'rename (which-key)', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = 'search (which-key)', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = 'workspace (which-key)', _ = 'which_key_ignore' },
+        ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
+        ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
+        ['<leader>h'] = { name = 'Git signs', _ = 'which_key_ignore' },
+        ['<leader>r'] = { name = 'Rename', _ = 'which_key_ignore' },
+        ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
+        ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
       }
     end,
   },

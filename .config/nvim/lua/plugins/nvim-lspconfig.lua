@@ -7,6 +7,7 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} }, -- `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'folke/neodev.nvim', opts = {} },
+      'jose-elias-alvarez/null-ls.nvim',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -19,18 +20,18 @@ return {
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('gd', require('telescope.builtin').lsp_definitions, 'lsp_definitions')
-          map('gr', require('telescope.builtin').lsp_references, 'lsp_references')
-          map('gI', require('telescope.builtin').lsp_implementations, 'lsp_implementations')
+          map('gd', require('telescope.builtin').lsp_definitions, 'Definition')
+          map('gr', require('telescope.builtin').lsp_references, 'References')
+          map('gI', require('telescope.builtin').lsp_implementations, 'Implemenentations')
 
-          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'lsp_type_definitions')
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'lsp_document_symbols')
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'lsp_dynamic_workspace_symbols')
-          map('<leader>rn', vim.lsp.buf.rename, 'rename a variable (files etc)')
-          map('<leader>ca', vim.lsp.buf.code_action, 'code action (errors)')
+          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type definitions')
+          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document symbols')
+          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Dynamic workspace symbols')
+          map('<leader>rn', vim.lsp.buf.rename, 'Rename buffer')
+          map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
 
-          map('K', vim.lsp.buf.hover, 'hover documentation')
-          map('gD', vim.lsp.buf.declaration, 'declaration')
+          map('K', vim.lsp.buf.hover, 'Buffer hover docs')
+          map('gD', vim.lsp.buf.declaration, 'LSP: Buffer declaration')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
@@ -70,6 +71,7 @@ return {
         'tsserver',
         'csharp_ls',
         'fsautocomplete',
+        'jsonls',
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

@@ -28,6 +28,7 @@ return {
   end,
   --]]
   keys = {
+    { '<C-b>', ':Neotree toggle<CR>', { desc = 'NeoTree toggle' } },
     { '<C-t>', ':Neotree toggle<CR>', { desc = 'NeoTree toggle' } },
     { '<leader>t', ':Neotree toggle<CR>', { desc = 'NeoTree toggle' } },
     { '<leader>r', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
@@ -72,7 +73,7 @@ return {
         local is_directory = vim.fn.isdirectory(buf_name) == 1
 
         if is_directory then
-          vim.cmd 'Neotree toggle'
+          --vim.cmd 'Neotree toggle'
         end
       end,
     })
