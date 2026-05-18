@@ -15,7 +15,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
-PROMPT='%(!.%{$fg[red]%}.%{$fg[white]%})%~$(git_prompt_info)%{$reset_color%}'
+PROMPT='%(!.%{$fg[red]%}.%{$fg[white]%})%~$(git_prompt_info)%{$reset_color%} > '
 RPROMPT='%D{%H:%M:%S}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg_bold[blue]%}("
@@ -24,6 +24,7 @@ ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✔"
 
 eval "$(fzf --zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
@@ -34,3 +35,4 @@ if [ -f $user_config ]; then
 fi
 
 echo "\e[32mcurrent home: $HOME\e[m"
+export PATH="$HOME/.local/bin:$PATH"
