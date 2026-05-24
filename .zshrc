@@ -5,13 +5,13 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export HOMEBREW_NO_AUTO_UPDATE=1
-
+export COLORTERM=truecolor
 export JAVA_HOME="$(brew --prefix openjdk@21)"
 
 export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:$HOME/.dotnet/tools"
 export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -35,4 +35,3 @@ if [ -f $user_config ]; then
 fi
 
 echo "\e[32mcurrent home: $HOME\e[m"
-export PATH="$HOME/.local/bin:$PATH"

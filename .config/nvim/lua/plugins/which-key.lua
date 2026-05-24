@@ -1,18 +1,21 @@
--- Useful plugin to show you pending keybinds.
+-- which-key shows a popup of available keybinds after pressing a prefix (e.g. <leader>)
+-- Loads on VimEnter: fires after nvim finishes startup — near-instant but doesn't block startup
 return {
   {
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git signs', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = 'Rename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
+    version = '*',
+    event = 'VimEnter',
+    config = function()
+      local wk = require 'which-key'
+      wk.setup()
+      -- which-key v3 API: document key groups
+      wk.add {
+        { '<leader>c', group = 'Code' },
+        { '<leader>d', group = 'Document' },
+        { '<leader>h', group = 'Git signs' },
+        { '<leader>r', group = 'Rename' },
+        { '<leader>s', group = 'Search' },
+        { '<leader>w', group = 'Workspace' },
       }
     end,
   },

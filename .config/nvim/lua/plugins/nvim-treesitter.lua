@@ -2,18 +2,21 @@ return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
   opts = {
-    ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'php' },
-    auto_install = true,
+    ensure_installed = {
+      'bash', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline',
+      'vim', 'vimdoc', 'javascript', 'typescript', 'tsx', 'json', 'yaml', 'css',
+    },
+    -- auto_install disabled: avoids triggering parser downloads on startup for new filetypes
+    auto_install = false,
     highlight = {
       enable = true,
-      --  the list of additional_vim_regex_highlighting and disabled languages for indent.
       additional_vim_regex_highlighting = { 'ruby' },
     },
     indent = { enable = true, disable = { 'ruby' } },
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = 'gnn', -- set to `false` to disable one of the mappings
+        init_selection = 'gnn',
         node_incremental = 'grn',
         scope_incremental = 'grc',
         node_decremental = 'grm',

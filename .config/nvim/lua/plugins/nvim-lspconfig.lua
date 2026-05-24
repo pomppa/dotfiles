@@ -5,9 +5,9 @@ return {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      { 'j-hui/fidget.nvim', opts = {} }, -- `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'folke/neodev.nvim', opts = {} },
-      'jose-elias-alvarez/null-ls.nvim',
+      { 'j-hui/fidget.nvim', opts = {} },
+      -- lazydev replaces deprecated neodev.nvim — provides Lua LSP for nvim config/plugins
+      { 'folke/lazydev.nvim', ft = 'lua', opts = {} },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -17,12 +17,9 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-t>.
           map('gd', require('telescope.builtin').lsp_definitions, 'Definition')
           map('gr', require('telescope.builtin').lsp_references, 'References')
-          map('gI', require('telescope.builtin').lsp_implementations, 'Implemenentations')
+          map('gI', require('telescope.builtin').lsp_implementations, 'Implementations')
 
           map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type definitions')
           map('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document symbols')
@@ -31,15 +28,14 @@ return {
           map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
 
           map('K', vim.lsp.buf.hover, 'Buffer hover docs')
-          map('gD', vim.lsp.buf.declaration, 'LSP: Buffer declaration')
+          map('gD', vim.lsp.buf.declaration, 'Buffer declaration')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
-            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, { -- :help CursorHold
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
               callback = vim.lsp.buf.document_highlight,
             })
-
             vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
               buffer = event.buf,
               callback = vim.lsp.buf.clear_references,
@@ -50,14 +46,12 @@ return {
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
       local servers = {
         lua_ls = {
           settings = {
             Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- diagnostics = { disable = { 'missing-fields' } },
+              completion = { callSnippet = 'Replace' },
             },
           },
         },
@@ -66,12 +60,13 @@ return {
       require('mason').setup()
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua',
-        'intelephense',
-        'tsserver',
-        'csharp_ls',
-        'fsautocomplete',
-        'jsonls',
+        'stylua', -- Lua formatter
+        'prettierd', -- TS/JSON formatter
+        'black', -- Python formatter
+        'ts_ls', -- JS / TS
+        'jsonls', -- JSON
+        'bashls', -- Shell scripts
+        'yamlls', -- YAML config files
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

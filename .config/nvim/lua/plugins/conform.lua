@@ -1,7 +1,7 @@
 return {
   { -- Autoformat
     'stevearc/conform.nvim',
-    lazy = false,
+    event = 'BufWritePre',
     keys = {
       {
         '<leader>f',
@@ -15,7 +15,6 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
-        -- disable "format_on_save lsp_fallback"
         local disable_filetypes = { c = true, cpp = true }
         return {
           timeout_ms = 500,
@@ -24,8 +23,9 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- python = { "isort", "black" },
-        -- javascript = { { "prettierd", "prettier" } },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
