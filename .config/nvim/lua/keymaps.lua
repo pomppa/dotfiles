@@ -13,8 +13,8 @@ vim.keymap.set({ 'n', 'x', 'o' }, 'ö', 'l', { desc = 'Move right' })
 -- Window navigation
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus upper window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus left window' })
-vim.keymap.set('n', '<C-ö>', '<C-w><C-ö>', { desc = 'Focus right window' })
+vim.keymap.set('n', '<C-l>', '<C-w>h', { desc = 'Focus left window' })
+vim.keymap.set('n', '<C-ö>', '<C-w>l', { desc = 'Focus right window' })
 
 -- Jump (keep centered)
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
